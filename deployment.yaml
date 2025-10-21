@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: votingapp
-          image: 22251a1257it258/voter:latest
+          image: 22251a1257it258/voters:latest
           ports:
             - containerPort: 5000
