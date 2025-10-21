@@ -15,7 +15,7 @@ pipeline {
             steps {
                 echo "pushing docker image"
                 bat 'docker tag votingapp:v1 22251a1257it258/voter:kuberimg1'
-                bat 'docker push 22251a1257it258/voter:kuberimg1'
+                bat 'docker push 22251a1257it258/voters:kuberimg1'
             }
         }
         stage('Deploy to Kubernetes') {
