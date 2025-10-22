@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: symmetrical-deployment
+  name: devopsassign1-deployment
 spec:
   replicas: 4
   selector:
     matchLabels:
-      app: symmetrical
+      app: devopsassign1
   template:
     metadata:
       labels:
-        app: symmetrical
+        app: devopsassign1
     spec:
       containers:
-      - name: symmetrical
-        image: 22251a1257it258/symmetrical:kuberimg2
+      - name: devopsassign1
+        image: 22251a1257it258/devopsasssign1:kuberimg3
         ports:
         - containerPort: 5000
