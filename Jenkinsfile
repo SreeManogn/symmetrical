@@ -6,21 +6,21 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 echo "Building Docker Image..."
-               bat "docker build -t movie-reviewapp:v1 ."
+               bat "docker build -t voters:v1 ."
             }
         }
 
         stage('Docker Login') {
             steps {
                 echo "Logging into Docker Hub..."
-                bat 'docker login -u shivaji108 -p Kaveri@1729'
+                bat 'docker login -u 22251a1257it258/symmetrical -p Manogna18@gnits'
             }
         }
 
         stage('Push Docker Image to Docker Hub') {
             steps {
-               bat 'docker tag movie-reviewapp:v1 shivaji108/sample:kuberimg2' 
-                bat 'docker push shivaji108/sample:kuberimg2'
+               bat 'docker tag voters:v1 22251a1257it258/voters:kuberimg2' 
+                bat 'docker push 22251a1257it258/voters:kuberimg2'
             }
         }
 
