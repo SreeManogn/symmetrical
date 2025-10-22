@@ -1,57 +1,56 @@
-from flask import Flask, render_template, request, redirect, url_for
-import sqlite3
-import os
+from flask import Flask, render_template, request, redirect
+from collections import Counter
 
 app = Flask(__name__)
-DB_PATH = "votes.db"
 
-# Ensure database exists
-def init_db():
-    conn = sqlite3.connect(DB_PATH)
-    c = conn.cursor()
-    c.execute('''
-        CREATE TABLE IF NOT EXISTS votes (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            option TEXT NOT NULL
-        )
-    ''')
-    conn.commit()
-    conn.close()
+# ==========================
+# Data Storage
+# ==========================
+candidates = []
+votes = []  # Only stores candidate names, no voter details
+
+# ==========================
+# Routes
+# ==========================
 
 @app.route('/')
-def index():
-    return render_template('index.html')
+def home():
+    return render_template('home.html')
 
-@app.route('/vote', methods=['POST'])
-def vote():
-    option = request.form['option']
-    conn = sqlite3.connect(DB_PATH)
-    c = conn.cursor()
-    c.execute("INSERT INTO votes (option) VALUES (?)", (option,))
-    conn.commit()
-    conn.close()
-    return redirect(url_for('results'))
 
-@app.route('/results')
-def results():
-    conn = sqlite3.connect(DB_PATH)
-    c = conn.cursor()
-    c.execute("SELECT option, COUNT(*) FROM votes GROUP BY option")
-    results = c.fetchall()
-    conn.close()
+@app.route('/candidate', methods=['GET', 'POST'])
+def candidate():
+    if request.method == 'POST':
+        name = request.form['name']
+        if name not in candidates:
+            candidates.append(name)
+        return redirect('/candidate')
+    return render_template('candidate.html', candidates=candidates)
 
-    # Extract vote counts
-    counts = {row[0]: row[1] for row in results}
-    python_votes = counts.get('Python', 0)
-    java_votes = counts.get('Java', 0)
-    total = python_votes + java_votes
 
-    return render_template('results.html',
-                           python_votes=python_votes,
-                           java_votes=java_votes,
-                           total=total)
+@app.route('/student', methods=['GET', 'POST'])
+def student():
+    if request.method == 'POST':
+        selected_candidate = request.form['candidate']
+        votes.append(selected_candidate)
+        return render_template('student.html', candidates=candidates, message=" Your vote has been recorded anonymously!")
+    return render_template('student.html', candidates=candidates)
 
+
+@app.route('/teacher')
+def teacher():
+    summary = Counter(votes)
+    if summary:
+        max_votes = max(summary.values())
+        winners = [name for name, count in summary.items() if count == max_votes]
+    else:
+        winners = []
+    return render_template('teacher.html', summary=summary, winners=winners)
+
+
+# ==========================
+# Main Entry Point
+# ==========================
 if __name__ == '__main__':
-    if not os.path.exists(DB_PATH):
-        init_db()
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
+
