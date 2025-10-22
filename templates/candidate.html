@@ -1,29 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Student Voting</title>
+<title>Candidate Registration</title>
 </head>
 <body>
-<h2>Student Voting</h2>
-
-{% if message %}
-<p><b>{{ message }}</b></p>
-{% endif %}
-
-{% if candidates %}
+<h2>Candidate Registration</h2>
 <form method="post">
-    <label>Select Candidate:</label><br><br>
-    {% for c in candidates %}
-        <input type="radio" name="candidate" value="{{ c }}" required> {{ c }}<br>
-    {% endfor %}
-    <br>
-    <input type="submit" value="Submit Vote">
+    <label>Candidate Name:</label>
+    <input type="text" name="name" required><br><br>
+    <input type="submit" value="Register Candidate">
 </form>
+
+<h3>Registered Candidates:</h3>
+<ul>
+{% for c in candidates %}
+    <li>{{ c }}</li>
 {% else %}
-<p>No candidates available for voting yet. <a href="/candidate">Register candidates first</a>.</p>
-{% endif %}
+    <li>No candidates registered yet.</li>
+{% endfor %}
+</ul>
 
 <a href="/">Go to Home Page</a><br><br>
-<a href="/teacher">Go to result Page</a>
+<a href="/student">Go to Voting Page</a>
 </body>
 </html>
