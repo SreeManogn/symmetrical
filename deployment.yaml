@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: devopsapp1
-        image: 22251a1257/devopsapp1:kuberimg2
+        image: 22251a1257/devopsapp1:kuberimg3
         ports:
         - containerPort: 5000
 
