@@ -35,7 +35,7 @@ pipeline {
 
     post {
         success {
-            echo "Deployment successful! Movie Review App is now live on Kubernetes."
+            echo "Deployment successful! "
         }
         failure {
             echo "Deployment failed. Check Jenkins logs for errors."
