@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: symmetrical-deployment
+  name: moviereview-deployment
 spec:
   replicas: 4
   selector:
     matchLabels:
-      app: symmetrical
+      app: moviereview
   template:
     metadata:
       labels:
-        app: symmetrical
+        app: moviereview
     spec:
       containers:
-        - name: symmetrical
-          image: 22251a1257it258/symmetrical:latest
-          ports:
-            - containerPort: 5000
+      - name: moviereview
+        image: shivaji108/sample:kuberimg2
+        ports:
+        - containerPort: 5000
