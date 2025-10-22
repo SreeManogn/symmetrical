@@ -2,20 +2,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: devopsapp-deployment
+  name: devopsapp1-deployment
 spec:
   replicas: 4
   selector:
     matchLabels:
-      app: devopsapp
+      app: devopsapp1
   template:
     metadata:
       labels:
-        app: devopsapp
+        app: devopsapp1
     spec:
       containers:
-      - name: devopsapp
-        image: 22251a1257/devopsapp:kuberimg2
+      - name: devopsapp1
+        image: 22251a1257/devopsapp1:kuberimg2
         ports:
         - containerPort: 5000
 
