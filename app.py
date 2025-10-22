@@ -3,20 +3,12 @@ from collections import Counter
 
 app = Flask(__name__)
 
-# ==========================
-# Data Storage
-# ==========================
 candidates = []
 votes = []  # Only stores candidate names, no voter details
-
-# ==========================
-# Routes
-# ==========================
 
 @app.route('/')
 def home():
     return render_template('home.html')
-
 
 @app.route('/candidate', methods=['GET', 'POST'])
 def candidate():
@@ -27,7 +19,6 @@ def candidate():
         return redirect('/candidate')
     return render_template('candidate.html', candidates=candidates)
 
-
 @app.route('/student', methods=['GET', 'POST'])
 def student():
     if request.method == 'POST':
@@ -35,7 +26,6 @@ def student():
         votes.append(selected_candidate)
         return render_template('student.html', candidates=candidates, message=" Your vote has been recorded anonymously!")
     return render_template('student.html', candidates=candidates)
-
 
 @app.route('/teacher')
 def teacher():
@@ -47,10 +37,5 @@ def teacher():
         winners = []
     return render_template('teacher.html', summary=summary, winners=winners)
 
-
-# ==========================
-# Main Entry Point
-# ==========================
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
-
