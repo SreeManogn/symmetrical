@@ -6,7 +6,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 echo "Building Docker Image..."
-               bat "docker build -t voters:v1 ."
+               bat "docker build -t devopsasssign1:v1 ."
             }
         }
 
@@ -19,8 +19,8 @@ pipeline {
 
         stage('Push Docker Image to Docker Hub') {
             steps {
-               bat 'docker tag voters:v1 22251a1257it258/voters:kuberimg2' 
-                bat 'docker push 22251a1257it258/voters:kuberimg2'
+               bat 'docker tag voters:v1 22251a1257it258/devopsasssign1:kuberimg3' 
+                bat 'docker push 22251a1257it258/devopsasssign1:kuberimg3'
             }
         }
 
