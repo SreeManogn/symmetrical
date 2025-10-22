@@ -10,7 +10,7 @@ spec:
   template:
     metadata:
       labels:
-        app: 
+        app: symmetrical
     spec:
       containers:
       - name: symmetrical
