@@ -24,7 +24,7 @@ def student():
     if request.method == 'POST':
         selected_candidate = request.form['candidate']
         votes.append(selected_candidate)
-        return render_template('student.html', candidates=candidates, message="✅ Your vote has been recorded anonymously!")
+        return render_template('student.html', candidates=candidates, message=" Your vote has been recorded anonymously!")
     return render_template('student.html', candidates=candidates)
 
 @app.route('/teacher')
