@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: symmetric-deployment
+  name: symmetrical-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: symmetric
+      app: symmetrical
   template:
     metadata:
       labels:
-        app: symmetric
+        app: symmetrical
     spec:
       containers:
-        - name: symmetric
-          image: 22251a1257it258/symmetric:latest
+        - name: symmetrical
+          image: 22251a1257it258/symmetrical:latest
           ports:
             - containerPort: 5000
