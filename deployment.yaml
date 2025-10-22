@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: devops2
-        image: 22251a1257it258/devops2:kuberimg3
+        image: 22251a1257it258/devops2:kuberimg4
         ports:
         - containerPort: 5000
 
