@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: devopsapp-service
+  name: devopsapp1-service
 spec:
   selector:
-    app: devopsapp
+    app: devopsapp1
   ports:
     - protocol: TCP
       port: 5000
       targetPort: 5000
-      nodePort: 30084
+      nodePort: 30100
   type: NodePort
