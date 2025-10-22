@@ -6,7 +6,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 echo "Building Docker Image..."
-               bat "docker build -t devopsapp1:v1 ."
+               bat "docker build -t devops2:v1 ."
             }
         }
 
@@ -19,8 +19,8 @@ pipeline {
 
         stage('Push Docker Image to Docker Hub') {
             steps {
-               bat 'docker tag devopsapp1:v1 22251a1257it258/devopsapp1:kuberimg3' 
-               bat 'docker push 22251a1257it258/devopsapp1:kuberimg3'
+               bat 'docker tag devops2:v1 22251a1257it258/devops2:kuberimg3' 
+               bat 'docker push 22251a1257it258/devops2:kuberimg3'
             }
         }
 
