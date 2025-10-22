@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build Docker Image') {
             steps {
-                bat 'docker build -t symmetric:v1 .'
+                bat 'docker build -t symmetrical:v1 .'
             }
         }
         stage('Docker login') {
@@ -14,8 +14,8 @@ pipeline {
         stage('Push Docker Image to Docker hub') {
             steps {
                 echo "pushing docker image"
-                bat 'docker tag votingapp:v1 22251a1257it258/symmetric:devops'
-                bat 'docker push 22251a1257it258/symmetric:devops'
+                bat 'docker tag votingapp:v1 22251a1257it258/symmetrical:devops'
+                bat 'docker push 22251a1257it258/symmetrical:devops'
             }
         }
         stage('Deploy to Kubernetes') {
