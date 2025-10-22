@@ -20,7 +20,7 @@ pipeline {
         stage('Push Docker Image to Docker Hub') {
             steps {
                bat 'docker tag devopsapp1:v1 22251a1257it258/devopsapp1:kuberimg3' 
-               bat 'docker push 22251a1257it258/devopsapp1:kuberimg3 || exit 0'
+               bat 'docker push 22251a1257it258/devopsapp1:kuberimg3'
             }
         }
 
