@@ -7,10 +7,8 @@ app = Flask(__name__)
 
 DATA_FILE = 'data.json'
 
-
 # --- Helper functions ---
 def load_data():
-    """Safely load existing data from JSON or create a new one."""
     if not os.path.exists(DATA_FILE):
         data = {"candidates": [], "votes": [], "voting_open": True}
         save_data(data)
@@ -19,18 +17,14 @@ def load_data():
         try:
             data = json.load(f)
         except json.JSONDecodeError:
-            # In case file gets corrupted
             data = {"candidates": [], "votes": [], "voting_open": True}
     return data
 
-
 def save_data(data):
-    """Save the entire voting data dictionary to JSON file."""
     with open(DATA_FILE, 'w') as f:
         json.dump(data, f, indent=4)
 
-
-# --- Load data into memory ---
+# --- Load data ---
 data = load_data()
 
 
@@ -53,31 +47,20 @@ def candidate():
 @app.route('/student', methods=['GET', 'POST'])
 def student():
     if not data["voting_open"]:
-        return render_template('student.html', candidates=[], message="⚠️ Voting has ended. Please wait for the results.")
+        return render_template('student.html', candidates=[], message="⚠️ Voting has ended. Please wait for the results.", voting_open=False)
 
     if request.method == 'POST':
         selected_candidate = request.form.get('candidate')
         if selected_candidate in data["candidates"]:
             data["votes"].append(selected_candidate)
             save_data(data)
-            return render_template('student.html', candidates=data["candidates"], message="✅ Your vote has been recorded anonymously!")
+            return render_template('student.html', candidates=data["candidates"], message="✅ Your vote has been recorded anonymously!", voting_open=True)
 
-    return render_template('student.html', candidates=data["candidates"])
+    return render_template('student.html', candidates=data["candidates"], voting_open=True)
 
 
 @app.route('/teacher')
-@app.route('/teacher', methods=['GET', 'POST'])
 def teacher():
-    global data
-    # Handle reset if teacher clicks the button
-    if request.method == 'POST':
-        data.clear()
-        data.update({"candidates": [], "votes": [], "voting_open": True})
-        save_data(data)
-        summary = {}
-        winners = []
-        return render_template('teacher.html', summary=summary, winners=winners, message="✅ Election has been reset!")
-    
     # Close voting once teacher checks results
     data["voting_open"] = False
     save_data(data)
@@ -88,19 +71,4 @@ def teacher():
         max_votes = max(summary.values())
         winners = [name for name, count in summary.items() if count == max_votes]
 
-    return render_template('teacher.html', summary=summary, winners=winners, message=None)
-
-
-
-@app.route('/reset')
-def reset():
-    """Reset everything for a new election."""
-    data.clear()
-    data.update({"candidates": [], "votes": [], "voting_open": True})
-    save_data(data)
-    return "<h3>✅ Election has been reset successfully. <a href='/'>Return Home</a></h3>"
-
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
-
+    return render_template('teacher.html', summary=summary, winners=winners)
