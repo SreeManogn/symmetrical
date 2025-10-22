@@ -2,19 +2,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: votingapp-deployment
+  name: devopsapp-deployment
 spec:
   replicas: 4
   selector:
     matchLabels:
-      app: votingapp
+      app: devopsapp
   template:
     metadata:
       labels:
-        app: votingapp
+        app: devopsapp
     spec:
       containers:
-      - name: votingapp
+      - name: devopsapp
         image: 22251a1257/devopsapp:kuberimg2
         ports:
         - containerPort: 5000
