@@ -2,9 +2,29 @@
 <html>
 <head>
 <title>Voting Results</title>
+<style>
+  .reset-button {
+      background-color: #ff4d4d;
+      color: white;
+      font-weight: bold;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      margin-bottom: 20px;
+      border-radius: 5px;
+  }
+  .reset-button:hover {
+      background-color: #e60000;
+  }
+</style>
 </head>
 <body>
 <h2>Voting Results</h2>
+
+<!-- RESET BUTTON at the TOP -->
+<form method="post">
+    <input type="submit" class="reset-button" value="RESET ELECTION" onclick="return confirm('Are you sure you want to reset the election? This will delete all candidates and votes.')">
+</form>
 
 {% if message %}
     <p><b>{{ message }}</b></p>
@@ -35,11 +55,6 @@
 {% else %}
 <p>No votes submitted yet.</p>
 {% endif %}
-
-<!-- Reset Election Button -->
-<form method="post" style="margin-top:20px;">
-    <input type="submit" value="Reset Election" onclick="return confirm('Are you sure you want to reset the election? This will delete all candidates and votes.')">
-</form>
 
 <a href="/">Go to Home Page</a><br><br>
 <a href="/student">Go to Voting Page</a>
