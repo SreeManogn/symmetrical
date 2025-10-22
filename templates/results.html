@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Voting Results</title>
+<style>
+body { font-family: Arial, sans-serif; padding:40px; background:#f0f2f5; }
+h2 { color:#333; }
+table { border-collapse: collapse; width:50%; margin-bottom:20px; }
+th, td { border:1px solid #999; padding:10px; text-align:center; }
+th { background:#4CAF50; color:white; }
+.reset-button {
+    background-color:#ff4d4d; color:white; font-weight:bold;
+    padding:10px 20px; border:none; border-radius:5px; cursor:pointer;
+}
+.reset-button:hover { background-color:#e60000; }
+a { text-decoration:none; color:#007BFF; }
+</style>
+</head>
+<body>
+<h2>Voting Results</h2>
+
+{% if message %}
+<p><b>{{ message }}</b></p>
+{% endif %}
+
+{% if summary %}
+<h3>Vote Summary:</h3>
+<table>
+<tr><th>Candidate</th><th>Total Votes</th></tr>
+{% for name, count in summary.items() %}
+<tr><td>{{ name }}</td><td>{{ count }}</td></tr>
+{% endfor %}
+</table>
+
+{% if winners %}
+    {% if winners|length == 1 %}
+        <h3>Winner: {{ winners[0] }}</h3>
+    {% else %}
+        <h3>It's a Tie: {{ winners|join(', ') }}</h3>
+    {% endif %}
+{% endif %}
+{% else %}
+<p>No votes submitted yet.</p>
+{% endif %}
+
+<!-- RESET BUTTON AT BOTTOM -->
+<form method="post">
+    <input type="submit" class="reset-button" value="RESET ELECTION" onclick="return confirm('Are you sure? This will delete all candidates and votes.')">
+</form>
+
+<br>
+<a href="/">Back to Home</a><br>
+<a href="/student">Go to Voting Page</a>
+</body>
+</html>
