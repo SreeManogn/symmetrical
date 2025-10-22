@@ -66,7 +66,18 @@ def student():
 
 
 @app.route('/teacher')
+@app.route('/teacher', methods=['GET', 'POST'])
 def teacher():
+    global data
+    # Handle reset if teacher clicks the button
+    if request.method == 'POST':
+        data.clear()
+        data.update({"candidates": [], "votes": [], "voting_open": True})
+        save_data(data)
+        summary = {}
+        winners = []
+        return render_template('teacher.html', summary=summary, winners=winners, message="✅ Election has been reset!")
+    
     # Close voting once teacher checks results
     data["voting_open"] = False
     save_data(data)
@@ -77,7 +88,8 @@ def teacher():
         max_votes = max(summary.values())
         winners = [name for name, count in summary.items() if count == max_votes]
 
-    return render_template('teacher.html', summary=summary, winners=winners)
+    return render_template('teacher.html', summary=summary, winners=winners, message=None)
+
 
 
 @app.route('/reset')
