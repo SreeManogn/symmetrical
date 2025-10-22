@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: devopsapp1-service
+  name: devops2-service
 spec:
   selector:
-    app: devopsapp1
+    app: devops2
   ports:
     - protocol: TCP
       port: 5000
