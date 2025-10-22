@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Student Voting</title>
+<style>
+body { font-family: Arial, sans-serif; padding:40px; background:#eef2f7; }
+h2 { color:#333; }
+input[type=submit] { padding:10px 20px; background:#4CAF50; color:white; border:none; border-radius:5px; cursor:pointer; margin-top:10px; }
+input[type=submit]:hover { background:#45a049; }
+a { text-decoration:none; color:#007BFF; }
+</style>
+</head>
+<body>
+<h2>Student Voting</h2>
+
+{% if message %}
+<p><b>{{ message }}</b></p>
+{% endif %}
+
+{% if voting_open %}
+    {% if candidates %}
+    <form method="post">
+        {% for c in candidates %}
+            <input type="radio" name="candidate" value="{{ c }}" required> {{ c }}<br>
+        {% endfor %}
+        <input type="submit" value="Submit Vote">
+    </form>
+    {% else %}
+    <p>No candidates available yet. <a href="/candidate">Add candidates first</a>.</p>
+    {% endif %}
+{% else %}
+<p>⚠️ Voting has ended. Check results.</p>
+{% endif %}
+
+<br>
+<a href="/">Back to Home</a><br>
+<a href="/results">View Results</a>
+</body>
+</html>
