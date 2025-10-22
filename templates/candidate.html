@@ -2,23 +2,13 @@
 <html>
 <head>
 <title>Candidate Registration</title>
-<style>
-body { font-family: Arial, sans-serif; padding:40px; background:#f9f9f9; }
-h2 { color:#333; }
-form { margin-bottom:30px; }
-input[type=text] { padding:10px; width:300px; margin-right:10px; }
-input[type=submit] { padding:10px 20px; background:#4CAF50; color:white; border:none; border-radius:5px; cursor:pointer; }
-input[type=submit]:hover { background:#45a049; }
-ul { list-style:none; padding:0; }
-li { padding:5px 0; }
-a { text-decoration:none; color:#007BFF; }
-</style>
 </head>
 <body>
 <h2>Candidate Registration</h2>
 <form method="post">
-    <input type="text" name="name" placeholder="Candidate Name" required>
-    <input type="submit" value="Add Candidate">
+    <label>Candidate Name:</label>
+    <input type="text" name="name" required><br><br>
+    <input type="submit" value="Register Candidate">
 </form>
 
 <h3>Registered Candidates:</h3>
@@ -30,7 +20,7 @@ a { text-decoration:none; color:#007BFF; }
 {% endfor %}
 </ul>
 
-<a href="/">Back to Home</a><br><br>
+<a href="/">Go to Home Page</a><br><br>
 <a href="/student">Go to Voting Page</a>
 </body>
 </html>
