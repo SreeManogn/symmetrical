@@ -1,28 +1,44 @@
-pipeline {
+pipeline { 
     agent any
+
     stages {
+
         stage('Build Docker Image') {
             steps {
-                bat 'docker build -t symmetrical:v1 .'
+                echo "Building Docker Image..."
+               bat "docker build -t movie-reviewapp:v1 ."
             }
         }
-        stage('Docker login') {
+
+        stage('Docker Login') {
             steps {
-                bat 'docker login -u 22251a1257it258 -p Manogna18@gnits'
+                echo "Logging into Docker Hub..."
+                bat 'docker login -u shivaji108 -p Kaveri@1729'
             }
         }
-        stage('Push Docker Image to Docker hub') {
+
+        stage('Push Docker Image to Docker Hub') {
             steps {
-                echo "pushing docker image"
-                bat 'docker tag votingapp:v1 22251a1257it258/symmetrical:devops'
-                bat 'docker push 22251a1257it258/symmetrical:devops'
+               bat 'docker tag movie-reviewapp:v1 shivaji108/sample:kuberimg2' 
+                bat 'docker push shivaji108/sample:kuberimg2'
             }
         }
+
         stage('Deploy to Kubernetes') {
             steps {
-                bat 'kubectl apply -f deployment.yaml --validate=false'
-                bat 'kubectl apply -f service.yaml'
+                echo "Deploying to Kubernetes..."
+                bat "kubectl apply -f deployment.yaml --validate=false"
+                bat "kubectl apply -f service.yaml"
             }
+        }
+    }
+
+    post {
+        success {
+            echo "Deployment successful! Movie Review App is now live on Kubernetes."
+        }
+        failure {
+            echo "Deployment failed. Check Jenkins logs for errors."
         }
     }
 }
