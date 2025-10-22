@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: symmetrical-service
+  name: devopsasssign1-service
 spec:
   selector:
-    app: symmetrical
+    app: devopsasssign1
   ports:
     - protocol: TCP
       port: 5000
       targetPort: 5000
-      nodePort: 30085   # Changed from 30084
+      nodePort: 30087   # Changed from 30084
   type: NodePort
