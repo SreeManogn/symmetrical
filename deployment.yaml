@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: votingapp-deployment
+  name: symmetric-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: votingapp
+      app: symmetric
   template:
     metadata:
       labels:
-        app: votingapp
+        app: symmetric
     spec:
       containers:
-        - name: votingapp
-          image: 22251a1257it258/voters:latest
+        - name: symmetric
+          image: 22251a1257it258/symmetric:latest
           ports:
             - containerPort: 5000
