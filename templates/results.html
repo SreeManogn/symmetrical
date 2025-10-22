@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Results</h2>
+<ul>
+    {% for candidate, count in votes.items() %}
+        <li>{{ candidate }}: {{ count }} votes</li>
+    {% endfor %}
+</ul>
+<p><a href="{{ url_for('vote') }}">Vote again</a></p>
+{% endblock %}
