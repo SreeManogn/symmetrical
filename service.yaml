@@ -9,5 +9,5 @@ spec:
     - protocol: TCP
       port: 5000
       targetPort: 5000
-      nodePort: 30084
+      nodePort: 30085   # Changed from 30084
   type: NodePort
