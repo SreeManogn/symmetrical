@@ -1,41 +1,52 @@
-from flask import Flask, render_template, request, redirect
-from collections import Counter
+from flask import Flask, render_template, request, jsonify
+import json, os
 
 app = Flask(__name__)
+DATA_FILE = 'recipes.json'
 
-candidates = []
-votes = []  # Only stores candidate names, no voter details
+def load_data():
+    if not os.path.exists(DATA_FILE):
+        with open(DATA_FILE, 'w') as f:
+            json.dump([], f)
+    with open(DATA_FILE, 'r') as f:
+        return json.load(f)
+
+def save_data(data):
+    with open(DATA_FILE, 'w') as f:
+        json.dump(data, f, indent=4)
 
 @app.route('/')
-def home():
-    return render_template('home.html')
+def add_recipe_page():
+    return render_template('add.html')
 
-@app.route('/candidate', methods=['GET', 'POST'])
-def candidate():
-    if request.method == 'POST':
-        name = request.form['name']
-        if name not in candidates:
-            candidates.append(name)
-        return redirect('/candidate')
-    return render_template('candidate.html', candidates=candidates)
+@app.route('/view')
+def view_recipes_page():
+    return render_template('view.html')
 
-@app.route('/student', methods=['GET', 'POST'])
-def student():
-    if request.method == 'POST':
-        selected_candidate = request.form['candidate']
-        votes.append(selected_candidate)
-        return render_template('student.html', candidates=candidates, message=" Your vote has been recorded anonymously!")
-    return render_template('student.html', candidates=candidates)
+@app.route('/recipes', methods=['GET'])
+def get_recipes():
+    return jsonify(load_data())
 
-@app.route('/teacher')
-def teacher():
-    summary = Counter(votes)
-    if summary:
-        max_votes = max(summary.values())
-        winners = [name for name, count in summary.items() if count == max_votes]
-    else:
-        winners = []
-    return render_template('teacher.html', summary=summary, winners=winners)
+@app.route('/recipes', methods=['POST'])
+def add_recipe():
+    data = load_data()
+    new_recipe = {
+        "id": len(data) + 1,
+        "name": request.form['name'],
+        "category": request.form['category'],
+        "ingredients": request.form['ingredients'],
+        "steps": request.form['steps']
+    }
+    data.append(new_recipe)
+    save_data(data)
+    return jsonify({"message": "Recipe added successfully!"})
+
+@app.route('/recipes/<int:recipe_id>/delete', methods=['POST'])
+def delete_recipe(recipe_id):
+    data = load_data()
+    data = [r for r in data if r['id'] != recipe_id]
+    save_data(data)
+    return jsonify({"message": "Recipe deleted!"})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(debug=True)
