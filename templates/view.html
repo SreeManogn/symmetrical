@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>View Recipes 📖</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>🍽️ My Recipe Collection</h1>
+    <a href="/" class="link">➕ Add New Recipe</a>
+
+    <div class="filters">
+      <input type="text" id="search" placeholder="Search by name...">
+      <select id="categoryFilter">
+        <option value="">All Categories</option>
+      </select>
+    </div>
+
+    <div id="recipes"></div>
+  </div>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
